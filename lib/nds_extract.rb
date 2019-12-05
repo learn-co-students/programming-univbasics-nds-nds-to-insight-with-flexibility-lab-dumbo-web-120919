@@ -1,3 +1,4 @@
+require "pry"
 # Provided, don't edit
 require 'directors_database'
 
@@ -28,6 +29,7 @@ def movie_with_director_name(director_name, movie_data)
     :studio => movie_data[:studio],
     :director_name => director_name
   }
+  #binding.pry
 end
 
 
@@ -48,6 +50,21 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
+ #binding.pry  
+ ty = 0 
+  empty_hash = []
+  
+  while ty < movies_collection.length do 
+   tup = movie_with_director_name(name, movies_collection[ty])
+
+ #binding.pry
+    
+ empty_hash << tup 
+  
+  ty += 1 
+end 
+  # 
+  return empty_hash
 end
 
 
@@ -63,6 +80,23 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+  #binding.pry
+  
+  pip = 0 
+  a_o_h = {}
+  while pip < collection.length do 
+   #
+   need_addy = collection[pip][:studio] 
+    #binding.pry 
+   if  a_o_h[need_addy] 
+      a_o_h[need_addy] += collection[pip][:worldwide_gross]
+     else 
+       a_o_h[need_addy] = collection[pip][:worldwide_gross]
+     end
+     
+    pip += 1 
+  end
+return a_o_h
 end
 
 def movies_with_directors_set(source)
@@ -76,6 +110,26 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
+  
+  
+  pnf = 0 
+  kick = []
+  
+  while pnf < source.length do 
+    directors_name = source[pnf][:name]
+    movies = source[pnf][:movies]
+    counter = 0 
+    while counter < movies.length do 
+      #
+      movies[counter][:director_name] = directors_name
+      
+      counter += 1 
+    end
+ 
+  kick << movies
+  pnf += 1 
+  end 
+  return kick 
 end
 
 # ----------------    End of Your Code Region --------------------
