@@ -21,7 +21,7 @@ def flatten_a_o_a(aoa)
 end
 
 def movie_with_director_name(director_name, movie_data)
-  { 
+  {
     :title => movie_data[:title],
     :worldwide_gross => movie_data[:worldwide_gross],
     :release_year => movie_data[:release_year],
@@ -34,25 +34,39 @@ end
 # Your code after this point
 
 def movies_with_director_key(name, movies_collection)
-  # GOAL: For each Hash in an Array (movies_collection), provide a collection
-  # of movies and a directors name to the movie_with_director_name method
-  # and accumulate the returned Array of movies into a new Array that's
-  # returned by this method.
-  #
-  # INPUT:
-  # * name: A director's name
-  # * movies_collection: An Array of Hashes where each Hash represents a movie
-  #
-  # RETURN:
-  #
-  # Array of Hashes where each Hash represents a movie; however, they should all have a
-  # :director_name key. This addition can be done by using the provided
-  # movie_with_director_name method
+  result = []
+  index = 0
+
+  while index < movies_collection.length do
+    movie_data = movies_collection[index]
+    result << movie_with_director_name(name, movie_data)
+    index += 1
+  end
+
+  result
 end
 
 
 def gross_per_studio(collection)
-  # GOAL: Given an Array of Hashes where each Hash represents a movie,
+  result = {}
+  i = 0
+
+  while i < collection.length do
+    movie = collection[i]
+
+    if !result[movie[:studio]]
+      result[movie[:studio]] = movie[:worldwide_gross]
+    else
+      result[movie[:studio]] += movie[:worldwide_gross]
+    end
+    i += 1
+  end
+
+  result
+
+
+
+    # GOAL: Given an Array of Hashes where each Hash represents a movie,
   # return a Hash that includes the total worldwide_gross of all the movies from
   # each studio.
   #
@@ -66,7 +80,18 @@ def gross_per_studio(collection)
 end
 
 def movies_with_directors_set(source)
-  # GOAL: For each director, find their :movies Array and stick it in a new Array
+  i = 0
+  a_o_a_movies_by_director = []
+
+  while i < source.length do
+    director_info = source[i]
+    director_name = director_info[:name]
+    director_movies = director_info[:movies]
+    a_o_a_movies_by_director << movies_with_director_key(director_name, director_movies)
+    i += 1
+  end
+
+  a_o_a_movies_by_director  # GOAL: For each director, find their :movies Array and stick it in a new Array
   #
   # INPUT:
   # * source: An Array of Hashes containing director information including
